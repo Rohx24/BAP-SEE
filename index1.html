@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQ AI Assistant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0e171d;
+    color: #FFFFFF;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+#chat-box {
+    background-color: #212121;
+    border: 4px solid #212121;
+    border-radius: 10px;
+    padding: 10px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+.input-group {
+    margin-top: 20px;
+}
+
+#user-input {
+    border-radius: 0;
+}
+
+#send-btn {
+    border-radius: 0;
+}
+
+#send-btn:hover {
+    background-color: #5bc0de;
+    color: #0e171d;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">ResQ AI Assistant</h1>
+        <div id="chat-box" class="border rounded p-3 mt-3" style="height: 400px; overflow-y: auto;"></div>
+        <div class="input-group mt-3">
+            <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
+            <div class="input-group-append">
+                <button id="send-btn" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#send-btn').click(function() {
+                sendMessage();
+            });
+
+            $('#user-input').keypress(function(e) {
+                if (e.which === 13) {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                var userMessage = $('#user-input').val();
+                $('#chat-box').append('<p class="text-right"><strong>You:</strong> ' + userMessage + '</p>');
+                $('#user-input').val('');
+
+                // Send user message to server
+                $.ajax({
+                    type: 'POST',
+                    url: '/chat',
+                    data: {'user_message': userMessage},
+                    success: function(response) {
+                        var botResponse = response.bot_response;
+                        $('#chat-box').append('<p class="text-left"><strong>ResQ AI:</strong> ' + botResponse + '</p>');
+                        $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        function openSecondaryWebsite() {
+            window.open("http://192.168.1.10:3000", "_blank");
+        }
+    </script>
+    
+</body>
+</html>

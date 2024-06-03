@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQ Ambulance Services</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+    <style>
+        @media only screen and (max-width: 600px) {
+            #header {
+                background-image: url("{{ url_for('static', filename='images/DOC.jpeg') }}");
+                background-size: cover;
+            }
+        }
+
+        #emergency-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ff004f;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header section -->
+    <div id="header">
+        <div class="container">
+            <nav>
+                <h2>ResQ</h2>
+                <ul id="sidemenu">
+                    <li><a href="{{ url_for('index') }}">HOME</a></li>
+                    <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+                    <li><a href="{{ url_for('hospitals') }}">SERVICES</a></li>
+                    <li><a href="{{ url_for('index') }}#contact">CONTACT</a></li>
+                    <li><a href="{{ url_for('my_maps') }}" id="booking-link">BOOKING</a></li>
+                    <li><a href="javascript:void(0)" id="emergency-link">ResQ NOW</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()"></i>
+            </nav>
+            <div class="header-text">
+                <h1><span>Emergency</span>? Call <span>ResQ</span></h1>
+                <p>Fast, Reliable Ambulance Services</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content section -->
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Contact section -->
+    <div id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="contact-left">
+                    <h1 class="sub-title">Contact Us</h1>
+                    <p><i class="fas fa-paper-plane"></i> contact@resqservices.com</p>
+                    <p><i class="fas fa-phone-square-alt"></i> 1800-121-RESQ (7377)</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com/"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="contact-right">
+                    <form id="contact-form">
+                        <input type="text" name="Name" placeholder="Your Name" required>
+                        <input type="email" name="Email" placeholder="Your Email" required>
+                        <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                        <button type="button" class="btn btn2" onclick="sendMail()">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button to open secondary website -->
+    <button onclick="openSecondaryWebsite()" id="openSecondaryBtn">ResQ AI</button>
+
+    <script>
+        function openSecondaryWebsite() {
+            window.open("http://127.0.0.1:3000", "_blank"); // Change the URL to match your secondary Flask app
+        }
+    </script>
+    <div id="emergency-message">
+        Emergency services are coming!
+    </div>
+
+    <!-- JavaScript for opening and closing the sidemenu -->
+    <script>
+        var sidemenu = document.getElementById("sidemenu");
+
+        function openmenu() {
+            sidemenu.style.right = "0";
+        }
+
+        function closemenu() {
+            sidemenu.style.right = "-200px";
+        }
+
+        function sendMail() {
+            var form = document.getElementById('contact-form');
+            var name = form.elements['Name'].value;
+            var email = form.elements['Email'].value;
+            var message = form.elements['Message'].value;
+
+            var subject = encodeURIComponent('Contact from ' + name);
+            var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
+
+            var mailto_link = 'https://mail.google.com/mail/?view=cm&fs=1&to=contact@resqservices.com' +
+                '&su=' + subject +
+                '&body=' + body;
+
+            window.open(mailto_link, '_blank');
+        }
+
+        document.getElementById('emergency-link').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showEmergencyMessage, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        });
+
+        function showEmergencyMessage(position) {
+            var emergencyMessage = document.getElementById('emergency-message');
+            emergencyMessage.style.display = 'block';
+
+            // Set a timeout to hide the message after 5 seconds
+            setTimeout(function() {
+                emergencyMessage.style.display = 'none';
+            }, 5000); // 5000 milliseconds = 5 seconds
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

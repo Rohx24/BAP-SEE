@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQ Ambulance Services</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <!-- Services section -->
+        <div id="services">
+            <div class="container">
+                <h1 class="sub-title">Our Services</h1>
+                <div class="services-list">
+                    <div>
+                        <i class="fas fa-ambulance"></i>
+                        <h2>Emergency Transport</h2>
+                        <p>Our ambulance service provides swift and reliable emergency transport for individuals in critical situations. We ensure timely response and safe transport to medical facilities.</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-user-md"></i>
+                        <h2>Specialized Care</h2>
+                        <p>With a team of skilled medical professionals, we offer specialized care during transportation, catering to the unique needs of patients requiring medical attention en route to hospitals or other facilities.</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-hands-helping"></i>
+                        <h2>Community Outreach</h2>
+                        <p>Beyond emergency response, we engage in community outreach programs to promote health awareness, conduct training sessions, and collaborate with local organizations to enhance emergency preparedness.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency message section -->
+        <div id="emergency-message">
+            Emergency services are coming!
+        </div>
+
+        <script>
+            document.getElementById('emergency-link').addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showEmergencyMessage, showError);
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+            });
+
+            function showEmergencyMessage(position) {
+                var emergencyMessage = document.getElementById('emergency-message');
+                emergencyMessage.style.display = 'block';
+
+                // Set a timeout to hide the message after 5 seconds
+                setTimeout(function() {
+                    emergencyMessage.style.display = 'none';
+                }, 5000); // 5000 milliseconds = 5 seconds
+            }
+
+            function showError(error) {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("User denied the request for Geolocation.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("Location information is unavailable.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("The request to get user location timed out.");
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        alert("An unknown error occurred.");
+                        break;
+                }
+            }
+        </script>
+    {% endblock %}
+</body>
+</html>

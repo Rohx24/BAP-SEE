@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQ Ambulance Services</title>
+    <style>
+        /* Paste your CSS styles here */
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #080808;
+            color: #fff;
+        
+        .container {
+            padding: 10px 10%;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        nav h2 {
+            color: red;
+            font-size: 50px;
+        }
+        nav ul li {
+            display: inline-block;
+            list-style: none;
+            margin: 10px 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            width: 0;
+            height: 3px;
+            background: #ff004f;
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            transition: 0.5s;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        .header-text {
+            margin-top: 20%;
+            font-size: 30px;
+        }
+        .header-text h1 {
+            font-size: 60px;
+            margin-top: 20px;
+        }
+        .header-text h1 span {
+            color: #ff004f;
+        }
+        /* Add other styles as needed */
+    </style>
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header section -->
+    <div id="header">
+        <div class="container">
+            <nav>
+                <h2>ResQ</h2>
+                <ul id="sidemenu">
+                    <li><a href="{{ url_for('index') }}">HOME</a></li>
+                    <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+                    <li><a href="{{ url_for('hospitals') }}">SERVICES</a></li>
+                    <li><a href="{{ url_for('index') }}#contact">CONTACT</a></li>
+                    <li><a href="{{ url_for('my_maps') }}" id="booking-link">BOOKING</a></li>
+                    <li><a href="javascript:void(0)" id="emergency-link">ResQ NOW</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()"></i>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Content section -->
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="hospitals">
+        <div class="container">
+            <h1 class="sub-title">Hospitals</h1>
+            <div class="hospital-list">
+                <div class="hospital" onclick="showDetails('Manipal Hospital')">
+                    <h2>Manipal Hospital</h2>
+                    <p>(Old Airport Road), Bangalore</p>
+                    <p>Phone: 123-456-7890</p>
+                    <p>Email: contact@manipalhospital.com</p>
+                    <div class="hospital-details" id="Manipal HospitalDetails" style="display: none;">
+                        <!-- Hospital details will appear here -->
+                    </div>
+                </div>
+                <div class="hospital" onclick="showDetails('Aster CMI Hospital')">
+                    <h2>Aster CMI Hospital</h2>
+                    <p>Address: Aster Address</p>
+                    <p>Phone: Aster Phone</p>
+                    <p>Email: Aster Email</p>
+                    <div class="hospital-details" id="Aster CMI HospitalDetails" style="display: none;">
+                        <!-- Hospital details will appear here -->
+                    </div>
+                </div>
+                <!-- Add more hospitals here -->
+                <div class="hospital" onclick="showDetails('Apollo Hospital')">
+                    <h2>Apollo Hospital</h2>
+                    <p>Bannerghatta Road</p>
+                    <p>Phone: Apollo Phone</p>
+                    <p>Email: Apollo Email</p>
+                    <div class="hospital-details" id="Apollo HospitalDetails" style="display: none;">
+                        <!-- Hospital details will appear here -->
+                    </div>
+                </div>
+                <div class="hospital" onclick="showDetails('Fortis Hospital')">
+                    <h2>Fortis Hospital</h2>
+                    <p>Bannerghatta Road</p>
+                    <p>Phone: Fortis Phone</p>
+                    <p>Email: Fortis Email</p>
+                    <div class="hospital-details" id="Fortis HospitalDetails" style="display: none;">
+                        <!-- Hospital details will appear here -->
+                    </div>
+                </div>
+                <div class="hospital" onclick="showDetails('Ramaiah Memorial Hospital')">
+                    <h2>Ramaiah Memorial Hospital</h2>
+                    <p>Ramaiah Address</p>
+                    <p>Phone: Ramaiah Phone</p>
+                    <p>Email: Ramaiah Email</p>
+                    <div class="hospital-details" id="Ramaiah Memorial HospitalDetails" style="display: none;">
+                        <!-- Hospital details will appear here -->
+                    </div>
+                </div>
+                <div class="hospital" onclick="showDetails('Sakra World Hospital')">
+                    <h2>Sakra World Hospital</h2>
+                    <p>Sakra Address</p>
+                    <p>Phone: Sakra Phone</p>
+                    <p>Email: Sakra Email</p>
+                    <div class="hospital-details" id="Sakra World HospitalDetails" style="display: none;">
+                        <!-- Hospital details will appear here -->
+                    </div>
+                </div>
+                <div class="hospital" onclick="showDetails('BGS Gleneagles Global Hospitals')">
+                    <h2>BGS Gleneagles Global Hospitals</h2>
+                    <p>BGS Address</p>
+                    <p>Phone: BGS Phone</p>
+                    <p>Email: BGS Email</p>
+                    <div class="hospital-details" id="BGS Gleneagles Global HospitalsDetails" style="display: none;">
+                        <!-- Hospital details will appear here -->
+                    </div>
+                </div>
+                <div class="hospital" onclick="showDetails('Sagar Hospital')">
+                    <h2>Sagar Hospital</h2>
+                    <p>Jayanagar</p>
+                

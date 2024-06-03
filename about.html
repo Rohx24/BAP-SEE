@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ResQ Ambulance Services</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+        <div class="container">
+            <nav>
+                <h2>ResQ</h2>
+                <ul id="sidemenu">
+                    <li><a href="{{ url_for('index') }}">HOME</a></li>
+                    <li><a href="{{ url_for('about') }}">ABOUT US</a></li>
+                    <li><a href="{{ url_for('index') }}#services">SERVICES</a></li>
+                    <li><a href="{{ url_for('index') }}#contact">CONTACT</a></li>
+                    <li><a href="{{ url_for('my_maps') }}" id="booking-link">BOOKING</a></li>
+                    <li><a href="{{ url_for('index') }}#emergency" id="emergency-link">ResQ NOW</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()"></i>
+            </nav>
+        </div>
+    </div>
+
+    <div id="about">
+        <div class="container">
+            <img src="/Users/shivarora/Documents/Flasktutorialstatick/static/vemana.jpg" alt="About Image" style="width: 100%; max-width: 400px; display: block; margin: 0 auto;">
+
+            <h1 class="sub-title">About us</h1>
+            <div class="services-list">
+                <div>
+                    <i class="fas fa-ambulance"></i>
+                    <h2>Service Offering</h2>
+                    <p>Delivering emergency transport, specialized care, and community outreach, our ambulance service ensures comprehensive assistance. From event coverage to critical care transport, we prioritize patient well-being and safety, offering seamless interfacility transfers and standby services.</p>
+                    <a href="#">Learn more</a>
+                </div>
+                <div>
+                    <i class="fas fa-users"></i>
+                    <h2>Team Members</h2>
+                    <p>Meet our ambitious first-year team from RV University: Rishit Guha, Rohit D, and Shiv Arora. With a blend of creativity, precision, and leadership, we're dedicated to driving impactful initiatives and fostering collaborative success.</p>
+                    <a href="#">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var sidemenu = document.getElementById("sidemenu");
+        function openmenu() {
+            sidemenu.style.right = "0";
+        }
+        function closemenu() {
+            sidemenu.style.right = "-200px";
+        }
+    </script>
+</body>
+</html>
